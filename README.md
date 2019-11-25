@@ -6,7 +6,7 @@ Allows you send saved gifs! (Works for any kind of images)
 
 `-gif <key>` Sends a gif to the chanel
 
-`-gif register <key>` Registers a new gif
+`-gif save <key>` Registers a new gif
 
 `-gif list` Lists all the registered gifs
 

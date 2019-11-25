@@ -26,8 +26,8 @@ async def on_message(message):
     command = parts[1]
 
     try:
-        if command == "r" or command == "reg" or command == "register":
-            await register_command(message, parts)
+        if command == "s" or command == "save":
+            await save_command(message, parts)
         elif command == "l" or command == "list":
             await list_command(message, parts)
         elif command == "d" or command == "del" or command == "delete":
@@ -44,25 +44,25 @@ async def on_message(message):
         print(f"oops an error occurred: {err}")
 
 
-async def register_command(message, parts):
+async def save_command(message, parts):
     if not is_uploader(message):
         await message.channel.send("Sorry you can't do that because you aren't an uploader ╘[◉﹃◉]╕")
         return
 
     if len(message.attachments) > 0 and len(parts) == 3:
         if db.image_exists(parts[2], message.channel.guild.id):
-            await message.channel.send("That gif already exists! Try using a different key ┐(‘～`；)┌")
+            await message.channel.send("That gif already exists! Try using a different name ┐(‘～`；)┌")
             return
 
-        print(f"registering image as key {parts[2]} ✌.ʕʘ‿ʘʔ.✌")
+        print(f"saving image as key {parts[2]} ")
         url = message.attachments[0].url
         r = requests.get(url)
         db.insert_image(parts[2], r.content, message.channel.guild.id)
-        await message.channel.send(f"Registered a gif {parts[2]} ヽ(ﾟ▽ﾟ*)乂(*ﾟ▽ﾟ)ﾉ")
+        await message.channel.send(f"Saved gif as {parts[2]} ✌.ʕʘ‿ʘʔ.✌")
         return
     else:
-        print("invalid register command sent")
-        await message.channel.send("That register command doesn't look quite right, try again ┐(‘～`；)┌")
+        print("invalid save command sent")
+        await message.channel.send("That save command doesn't look quite right, try again ┐(‘～`；)┌")
 
 
 async def list_command(message, parts):

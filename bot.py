@@ -45,7 +45,7 @@ async def on_message(message):
 
 
 async def register_command(message, parts):
-    if is_uploader(message):
+    if not is_uploader(message):
         await message.channel.send("Sorry you can't do that because you aren't an uploader ╘[◉﹃◉]╕")
         return
 
@@ -80,7 +80,7 @@ async def list_command(message, parts):
 
 
 async def delete_command(message, parts):
-    if is_uploader(message):
+    if not is_uploader(message):
         await message.channel.send("Sorry you can't do that because you aren't an uploader ╘[◉﹃◉]╕")
         return
 
@@ -98,7 +98,7 @@ async def delete_command(message, parts):
 
 
 async def update_command(message, parts):
-    if is_uploader(message):
+    if not is_uploader(message):
         await message.channel.send("Sorry you can't do that because you aren't an uploader ╘[◉﹃◉]╕")
         return
 

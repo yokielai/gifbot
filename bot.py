@@ -66,18 +66,32 @@ async def save_command(message, parts):
 
 
 async def list_command(message, parts):
-    if len(parts) == 2:
-        keys = db.list_keys(message.channel.guild.id)
-        if keys is None or keys == []:
-            await message.channel.send("No one has saved any GIFs yet! (◡﹏◡✿)")
-            return
+    try:
+        if len(parts) == 2:
+            keys = db.list_keys(message.channel.guild.id)
 
-        await message.channel.send(", ".join(keys))
+            if keys is None or keys == []:
+                await message.channel.send("No one has saved any GIFs yet! (◡﹏◡✿)")
+                return
 
-    else:
+            batch = []
+            batch_char_count = 0
+            for key in keys:
+                batch.append(key)
+                batch_char_count += len(key)
+                if batch_char_count > 1600:
+                    await message.channel.send(", ".join(batch))
+                    batch = []
+                    batch_char_count = 0
+
+            await message.channel.send(", ".join(batch))
+        else:
+            print("Cannot list all keys available")
+            await message.channel.send("Failed to find gifs ┐(‘～`；)┌")
+
+    except:
         print("Cannot list all keys available")
         await message.channel.send("Failed to find gifs ┐(‘～`；)┌")
-
 
 async def delete_command(message, parts):
     if not is_uploader(message):
